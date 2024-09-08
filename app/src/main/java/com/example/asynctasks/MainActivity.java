@@ -2,6 +2,7 @@ package com.example.asynctasks;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -74,10 +75,24 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: System.currentTimeMillis() = " + System.currentTimeMillis());
-                waitNSec(10);
-                clBackground.setBackgroundColor(Color.RED);
-                Log.d(TAG, "onClick: System.currentTimeMillis() = " + System.currentTimeMillis());
+//                Log.d(TAG, "onClick: System.currentTimeMillis() = " + System.currentTimeMillis());
+//                waitNSec(10);
+//                clBackground.setBackgroundColor(Color.RED);
+//                Log.d(TAG, "onClick: System.currentTimeMillis() = " + System.currentTimeMillis());
+
+                // using Handler of android.os.Handler
+                Handler h = new Handler();
+
+                // Runnable is interface that has method called "run"
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("ASYNC", "run : we have waited for 5 seconds");
+                        clBackground.setBackgroundColor(Color.RED);
+                    }
+                };
+                // 5000 milliseconds = 5 seconds
+                h.postDelayed(r, 5000);
             }
         });
     }
